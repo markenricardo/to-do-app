@@ -1,0 +1,173 @@
+
+body {
+  background: #EBE6E0; 
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  margin: 5px;
+  text-align: center;
+  background: #f5f5f5;
+}
+
+.footer{
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  margin: 5px;
+  text-align: center;
+  background: #f5f5f5;
+}
+
+.app-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Space between the cards */
+  padding: 20px;
+}
+
+.info-card {
+  width: 300px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  height: 450px; 
+  overflow-y: auto; /* Enable scrolling if tasks exceed max height */
+}
+
+.task-list {
+  flex-wrap: wrap; /* Allow wrapping of tasks */
+  gap: 10px;
+  width: 1000px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-height: 450px; /* Set max height to fit three task cards */
+  overflow-y: auto; /* Enable scrolling if tasks exceed max height */
+}
+
+
+.task-list > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px; /* Space between task cards */
+} 
+
+.task-card {
+  width: calc(33.33% - 10px);
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: #ffffff; /* Background for task items */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  word-wrap: break-word; /* Ensure words wrap */
+  overflow: hidden; /* Hide overflow */
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+}
+h1, h2 {
+  font-size: 1.5rem;
+}
+
+button {
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"] {
+  font-size: 1rem;
+  padding: 5px 10px;
+  width: 100%; /* Full width for input */
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+  margin-bottom: 10px; /* Space below input */
+  outline: none;
+}
+
+.text {
+  flex: 1;
+  padding: 0 10px;
+  word-wrap: break-word; /* Wrap long words */
+  word-break: break-word; /* Break words at the edge */
+  overflow-wrap: break-word; /* Additional support for wrapping */
+}
+
+.task-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  margin-top: 10px;
+  width: 100%;
+} 
+
+.delete-button,
+.done-button,
+.edit-button {
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover,
+.done-button:hover,
+.edit-button:hover {
+  background-color: #d0d0d0;
+}
+
+.delete-all-button,
+.mark-all-done-button {
+  margin: 10px 5px;
+  background-color: #8a878b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.delete-all-button:hover,
+.mark-all-done-button:hover {
+  background-color: #777476;
+}
+
+.info-card p {
+  margin: 10px 0;
+  font-size: 0.9rem;
+}
+
+.datetime {
+  font-size: 0.85rem; /* Smaller font size for date and time */
+  color: #666; /* Subtle color to differentiate from main text */
+  margin-top: 5px; /* Space between task and date/time */
+}
+
+.datetime span {
+  display: block; /* Ensures each part is on its own line */
+}
+
+.task-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
