@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 function ToDo() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
-  const [newDate, setNewDate] = useState("");
+  const [newDeadline, setNewDeadline] = useState("");
   const [newTime, setNewTime] = useState("");
   const [editIndex, setEditIndex] = useState(null);
 
@@ -30,8 +30,8 @@ function ToDo() {
     setNewTask(event.target.value);
   }
 
-  function handleDateChange(event) {
-    setNewDate(event.target.value);
+  function handleDeadlineChange(event) {
+    setNewDeadline(event.target.value);
   }
 
   function handleTimeChange(event) {
@@ -40,12 +40,19 @@ function ToDo() {
 
   function addTask() {
     if (newTask.trim() !== "") {
+      const createdDate = new Date().toISOString().split("T")[0];
       setTasks([
         ...tasks,
-        { text: newTask, done: false, date: newDate, time: newTime },
+        {
+          text: newTask,
+          done: false,
+          createdDate,
+          deadline: newDeadline,
+          time: newTime,
+        },
       ]);
       setNewTask("");
-      setNewDate("");
+      setNewDeadline("");
       setNewTime("");
     }
   }
@@ -70,14 +77,17 @@ function ToDo() {
     }
   }
 
-  function markAllAsDone() {
-    setTasks((prevTasks) => prevTasks.map((task) => ({ ...task, done: true })));
+  function toggleAllTaskStatuses() {
+    const allDone = tasks.every((task) => task.done);
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => ({ ...task, done: !allDone }))
+    );
   }
 
   function startEditing(index) {
     setEditIndex(index);
     setNewTask(tasks[index].text);
-    setNewDate(tasks[index].date);
+    setNewDeadline(tasks[index].deadline);
     setNewTime(tasks[index].time);
   }
 
@@ -86,12 +96,12 @@ function ToDo() {
       setTasks((prevTasks) =>
         prevTasks.map((task, i) =>
           i === editIndex
-            ? { ...task, text: newTask, date: newDate, time: newTime }
+            ? { ...task, text: newTask, deadline: newDeadline, time: newTime }
             : task
         )
       );
       setNewTask("");
-      setNewDate("");
+      setNewDeadline("");
       setNewTime("");
       setEditIndex(null);
     }
@@ -108,7 +118,8 @@ function ToDo() {
             value={newTask}
             onChange={handleInputChange}
           />
-          <input type="date" value={newDate} onChange={handleDateChange} />
+          <h3>Deadline:</h3>
+          <input type="date" value={newDeadline} onChange={handleDeadlineChange} />
           <input type="time" value={newTime} onChange={handleTimeChange} />
           <button
             className="add-button"
@@ -132,8 +143,9 @@ function ToDo() {
               >
                 <div>{task.text}</div>
                 <div className="datetime">
-                  {task.date && <span>Date: {task.date}</span>}
-                  {task.time && <span> Time: {task.time}</span>}
+                  <span>Created: {task.createdDate}</span>
+                  {task.deadline && <span>Deadline: {task.deadline}</span>}
+                  {task.time && <span>Time: {task.time}</span>}
                 </div>
               </div>
               <div className="task-buttons">
@@ -173,10 +185,12 @@ function ToDo() {
           </button>
           <button
             className="mark-all-done-button"
-            onClick={markAllAsDone}
-            aria-label="Mark All Tasks as Done"
+            onClick={toggleAllTaskStatuses}
+            aria-label={
+              tasks.every((task) => task.done) ? "Undo All Tasks" : "Mark All Tasks as Done"
+            }
           >
-            Mark All as Done
+            {tasks.every((task) => task.done) ? "Undo All" : "Mark All as Done"}
           </button>
         </div>
       </div>
