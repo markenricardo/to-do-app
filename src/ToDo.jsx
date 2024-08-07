@@ -7,17 +7,23 @@ function ToDo() {
   const [newTime, setNewTime] = useState("");
   const [editIndex, setEditIndex] = useState(null);
 
-
   useEffect(() => {
-    const storedTasks = localStorage.getItem("tasks");
-    if (storedTasks) {
-      setTasks(JSON.parse(storedTasks));
+    try {
+      const storedTasks = localStorage.getItem("tasks");
+      if (storedTasks) {
+        setTasks(JSON.parse(storedTasks));
+      }
+    } catch (error) {
+      console.error("Failed to load tasks from localStorage:", error);
     }
   }, []);
-  
-  // Save tasks to local storage whenever they change
+
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    try {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    } catch (error) {
+      console.error("Failed to save tasks to localStorage:", error);
+    }
   }, [tasks]);
 
   function handleInputChange(event) {
@@ -45,15 +51,16 @@ function ToDo() {
   }
 
   function toggleTaskStatus(index) {
-    const updatedTasks = tasks.map((task, i) =>
-      i === index ? { ...task, done: !task.done } : task
+    setTasks((prevTasks) =>
+      prevTasks.map((task, i) =>
+        i === index ? { ...task, done: !task.done } : task
+      )
     );
-    setTasks(updatedTasks);
   }
 
   function deleteTask(index) {
     if (window.confirm("Are you sure you want to delete this task?")) {
-      setTasks(tasks.filter((_, i) => i !== index));
+      setTasks((prevTasks) => prevTasks.filter((_, i) => i !== index));
     }
   }
 
@@ -64,8 +71,7 @@ function ToDo() {
   }
 
   function markAllAsDone() {
-    const updatedTasks = tasks.map((task) => ({ ...task, done: true }));
-    setTasks(updatedTasks);
+    setTasks((prevTasks) => prevTasks.map((task) => ({ ...task, done: true })));
   }
 
   function startEditing(index) {
@@ -77,12 +83,13 @@ function ToDo() {
 
   function updateTask() {
     if (newTask.trim() !== "") {
-      const updatedTasks = tasks.map((task, i) =>
-        i === editIndex
-          ? { ...task, text: newTask, date: newDate, time: newTime }
-          : task
+      setTasks((prevTasks) =>
+        prevTasks.map((task, i) =>
+          i === editIndex
+            ? { ...task, text: newTask, date: newDate, time: newTime }
+            : task
+        )
       );
-      setTasks(updatedTasks);
       setNewTask("");
       setNewDate("");
       setNewTime("");
@@ -95,7 +102,7 @@ function ToDo() {
       <div className="info-card">
         <h2>{editIndex !== null ? "Edit Task" : "Add Task"}</h2>
         <div>
-          <input
+          <textarea
             type="text"
             placeholder="What to do?"
             value={newTask}
@@ -133,18 +140,21 @@ function ToDo() {
                 <button
                   className="done-button"
                   onClick={() => toggleTaskStatus(index)}
+                  aria-label={task.done ? "Mark as Undone" : "Mark as Done"}
                 >
                   {task.done ? "Undone" : "Done"}
                 </button>
                 <button
                   className="edit-button"
                   onClick={() => startEditing(index)}
+                  aria-label="Edit Task"
                 >
                   ✎
                 </button>
                 <button
                   className="delete-button"
                   onClick={() => deleteTask(index)}
+                  aria-label="Delete Task"
                 >
                   🗑
                 </button>
@@ -154,10 +164,18 @@ function ToDo() {
         </div>
 
         <div className="task-actions">
-          <button className="delete-all-button" onClick={deleteAllTasks}>
+          <button
+            className="delete-all-button"
+            onClick={deleteAllTasks}
+            aria-label="Delete All Tasks"
+          >
             Delete All
           </button>
-          <button className="mark-all-done-button" onClick={markAllAsDone}>
+          <button
+            className="mark-all-done-button"
+            onClick={markAllAsDone}
+            aria-label="Mark All Tasks as Done"
+          >
             Mark All as Done
           </button>
         </div>
