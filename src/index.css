@@ -7,6 +7,7 @@ body {
 
 .header, .footer {
   font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #EBE6E0;
   border: none;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -26,17 +27,19 @@ body {
 
 .info-card {
   width: 300px;
+  color: #EBE6E0;
   font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
   background-color: #9D71BC;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  max-height: 100%; 
+  max-height: auto; 
   overflow-y: auto; 
 }
 
 .task-list {
   flex-wrap: wrap; 
+  color: #EBE6E0;
   gap: 10px;
   width: 1000px;
   font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -44,7 +47,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  max-height: 100%; 
+  max-height: auto; 
   overflow-y: auto; 
 }
 
@@ -77,6 +80,10 @@ body {
 
 h1, h2 {
   font-size: 1.5rem;
+}
+
+h3{
+  font-size: 1rem;
 }
 
 button {
